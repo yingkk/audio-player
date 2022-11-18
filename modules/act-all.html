@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预约平台</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/act-all.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app">
+    <div class="container">
+        <div class="header">*近一个月全部活动</div>
+        <van-empty v-if="loaded && !actLists.length" description="暂无活动"></van-empty>
+        <ul>
+            <li v-for="(item, i) in actLists" class="cl">
+                <div class="item-flag cl">
+                    <div v-if="item.data.setAppo == 0">仅限个人</div>
+                    <div v-if="item.data.setAppo == 1">仅限团体</div>
+                    <div v-if="item.data.setAppo == 2">团体个人都可参加</div>
+                    <div v-if="item.data.setAppo == 3">党建活动</div>
+                    <div v-if="item.data.setAppo == 3">仅限团体</div>
+                </div>
+                <div class="row row-1 cl">
+                    <div class="col col-1">
+                        <img :src="item.data.imageURL">
+                    </div>
+                    <div class="col col-2">
+                        <div class="item-title sl">{{item.data.title}}</div>
+                        <div v-if="item.data.setAppo != 3" class="item-desc item-desc-1">
+                            活动时间：
+                            <div>{{item.data.actDateStr}}（{{item.data.weekday}}） {{item.data.actTime}}</div>
+                        </div>
+                        <div v-if="item.data.setAppo != 3" class="item-desc item-desc-2">
+                            预约截止时间：
+                            <div>{{item.data.appoCutoffTimeStr}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div @click.stop="clickItem(item)" class="row row-2">
+                    活动详情
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="../js/modules/act-all.js?v=1.0.0"></script>
+</body>
+</html>

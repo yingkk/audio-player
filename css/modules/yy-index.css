@@ -1,0 +1,218 @@
+body {
+    background: #fff;
+    height: 100vh;
+    overflow: hidden;
+}
+.item {
+
+}
+
+.item .item-header {
+    padding-left: .24rem;
+    padding-top: .21rem;
+    padding-bottom: .09rem;
+    line-height: .2rem;
+}
+
+.item ul {
+    height: 2.1rem;
+    background-size: cover;
+    padding: 0.1rem 0.22rem 0;
+}
+
+.item ul li {
+    float: left;
+    width: 1.4rem;
+    height: 0.8rem;
+    margin-right: 0.11rem;
+    margin-top: 0.1rem;
+
+    font-size: .12rem;
+    color: #FFFFFF;
+    line-height: .16rem;
+    background-size: cover;
+}
+
+.item ul li:nth-child(2n) {
+    margin-right: 0;
+}
+.item ul li {
+    cursor: pointer;
+}
+
+.visit-item ul {
+    background-image: url("../../img/zjpw_sy_bg1.jpg");
+}
+
+.visit-item ul li:nth-child(1) {
+    cursor: pointer;
+    background-image: url("../../img/wx_cg_1.png");
+}
+
+.visit-item ul li:nth-child(2) {
+    cursor: pointer;
+    background-image: url("../../img/wx_cg_2.png");
+}
+
+/*.visit-item ul li:nth-child(3) {*/
+/*    cursor: pointer;*/
+/*    background-image: url("../../img/wx_cg_3.png");*/
+/*}*/
+
+.hd-item ul {
+    background-image: url("../../img/zjpw_sy_bg2.jpg");
+}
+
+.hd-item ul li:nth-child(1) {
+    cursor: pointer;
+    background-image: url("../../img/wx_hd_1.png");
+}
+
+.hd-item ul li:nth-child(2) {
+    cursor: pointer;
+    background-image: url("../../img/wx_hd_2.png");
+}
+
+.hd-item ul li:nth-child(3) {
+    cursor: pointer;
+    background-image: url("../../img/wx_hd_3.png");
+}
+.grzx-item {
+    margin-bottom: .24rem;
+}
+
+.grzx-item .item-header {
+    font-weight: bold;
+}
+
+.tips {
+    background: #F3F3F3;
+    padding: .16rem;
+    margin-bottom: .13rem;
+}
+
+.tips .tips-header {
+    line-height: .2rem;
+    margin-bottom: .06rem;
+}
+
+.tips .tips-c {
+    font-size: .12rem;
+    color: #999999;
+    line-height: .16rem;
+}
+.bind, .setup{
+    border-radius: 0.12rem;
+}
+
+.bind-phone, .setup-pwd{
+    width: 3.35rem;
+    padding:.18rem .24rem;
+    box-sizing: border-box;
+}
+.bind-phone-header, .setup-pwd-header {
+    font-size: .18rem;
+    font-weight: bold;
+    line-height: .18rem;
+    margin-bottom: .22rem;
+}
+.bind-phone .van-cell, .setup-pwd .van-cell{
+    padding: 0;
+    display: block;
+    height: .89rem;
+}
+.bind-phone .van-cell:after, .setup-pwd .van-cell:after{
+    display: none!important;
+}
+
+.bind-phone button, .setup-pwd button {
+    border-radius: 0;
+}
+.bind-phone .van-cell input, .setup-pwd .van-cell input{
+    padding: .1rem;
+    line-height: .2rem;
+    background: #F7F7F7;
+    border: .01rem solid #DBDBDB;
+    border-radius: 0;
+}
+.van-field__label {
+    width: 100%;
+    padding: .07rem 0 .07rem 0;
+    font-size: .12rem;
+    line-height: .12rem;
+    box-sizing: border-box;
+}
+.van-cell__value {
+    width: 100%;
+}
+.msg-code {
+    height: .4rem;
+    width: 1.3rem;
+}
+#fg-app {
+    height: 100vh;
+}
+
+.row-1 {
+    height: calc(100vh - .48rem);
+    overflow: auto;
+}
+
+.row-2 {
+    height: .48rem;
+    background: #EDEDED;
+}
+.row-2 .col {
+    float: left;
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    line-height: .48rem;
+    font-size: .16rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+.row-2 .col-1 {
+    border-right: .01rem solid #DBDBDB;
+
+}
+
+.row-2 .col span {
+    box-sizing: border-box;
+    padding-left: .22rem;
+    background: url("../../img/icon_wt.png") no-repeat 0 .02rem;
+    background-size: .18rem .18rem;
+}
+
+.row-2 .col-1 span {
+    background: url("../../img/icon_ht.png") no-repeat 0 .02rem;
+    background-size: .18rem .18rem;
+}
+
+.bottom-popup {
+    width: 3.35rem;
+    box-sizing: border-box;
+    padding: 0  0 .22rem;
+    max-height: 80vh;
+}
+.bottom-popup-header {
+    font-size: 0.18rem;
+    font-weight: bold;
+    line-height: 0.24rem;
+    text-align: center;
+    padding-top: .2rem;
+    padding-bottom: .1rem;
+}
+
+.bottom-popup-c {
+    padding: 0 .22rem;
+    box-sizing: border-box;
+    max-height: calc(80vh - .76rem);
+    overflow: auto;
+    font-size: .12rem;
+    color: #666666;
+    line-height: .2rem;
+}
+.bottom-popup-c span {
+    color: #B3312A;
+}

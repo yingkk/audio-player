@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预约平台</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/search.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app">
+    <div v-if="data" class="search search-header container">
+        <div class="search-title">搜索条件</div>
+        <div class="search-item cl">
+            <div class="search-item-col">
+                <div class="label">姓名</div>
+                <div class="value sl">{{data.name}}</div>
+            </div>
+            <div class="search-item-col">
+                <div class="label">证件号</div>
+                <div class="value sl">{{data.cardNum}}</div>
+            </div>
+            <div @click="clickSearch" class="edit"></div>
+        </div>
+    </div>
+    <div class="search search-main container" v-if="data && items">
+        <div class="search-title">搜索结果</div>
+        <!--        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">-->
+        <!--            <van-empty v-if="empty" description="暂无个人预约信息"></van-empty>-->
+        <!--            <van-list v-if="!empty" v-model="loading" :finished="finished" finished-text="没有更多了"-->
+        <!--                      @load="reqTabIndex0">-->
+
+        <van-empty v-if="!items.length" description="暂无预约"></van-empty>
+        <ul v-if="items.length">
+            <li :class="{disabled: item.state > 2}" class="item person" v-for="(item, i) in items">
+                <div class="item-header">
+                    <!--                    <span style="margin-right: 24px">预约时间：{{item.createtime}}</span>-->
+                    <span style="margin-right: .24rem">预约号：{{item.no}}</span>
+                    <span style="float: right">{{yyStateMap[item.state]}}</span>
+                </div>
+                <div class="item-c cl">
+                    <div class="row row-1 cl">
+                        <div class="col">
+                            <div @click="clickQRCode(item)" class="value sl4"
+                                 style="position: relative; margin-top: 0">
+                                <img :src="item.qrcode">
+                            </div>
+                        </div>
+                        <div class="col" style=" width: 1.2rem; margin-top: .25rem">
+                            <div class="label">姓名</div>
+                            <div class="value sl4">{{item.name}}</div>
+                        </div>
+<!--                        <div class="col" style="margin-top: .25rem">-->
+<!--                            <div class="label">人数</div>-->
+<!--                            <div class="value sl4">{{item.visitNum}}</div>-->
+<!--                        </div>-->
+                        <div class="col" style="width: 100%">
+                            <div class="label">活动类型</div>
+                            <div class="value sl4">{{item.appoTypeString}}</div>
+                        </div>
+                        <div class="col" style="width: 100%">
+                            <div class="label">参观时间</div>
+                            <div class="value sl4">{{item.visitDate}} {{item.visitTime}}</div>
+                        </div>
+<!--                        <div v-if="!item.show" class="col more">-->
+<!--                            <span @click="changeShow(items, i)">查看更多</span>-->
+<!--                        </div>-->
+                        <div class="col" style="width: 100%">
+                            <div class="label">截止进馆时间</div>
+                            <div class="value sl4">{{item.enterCutoffTime}}</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <!--            </van-list>-->
+        <!--        </van-pull-refresh>-->
+        <van-image-preview v-model="imageShow" :show-index="false" :images="images">
+        </van-image-preview>
+    </div>
+    <van-popup v-if="popupShow" v-model="popupShow" class="popup-search">
+        <van-form class="container" @submit="onSubmit" @failed="onFailed">
+            <van-field v-model="editForm.name" name="name" label="姓名"
+                       placeholder="请输入姓名" required
+                       :rules="[{ validator:validator, message: '请输入正确姓名' },{ validator: validatorNameLength, message: '长度至少两位' }]"></van-field>
+            <van-field v-model="editForm.cardNum" name="cardNum" label="证件号"
+                       placeholder="请输入证件号" required
+                       :rules="[{ validator:validator, message: '请输入正确证件号' }]">
+            </van-field>
+            <van-button :loading="loading" block color="#B3312A" native-type="submit">搜索</van-button>
+        </van-form>
+        <div class="container">
+            <div class="tips-header">注意：</div>
+            <div class="tips">
+                已预约的用户可凭借预约时输入的姓名<br/>
+                和证件号获取门票二维码
+            </div>
+        </div>
+    </van-popup>
+    <van-image-preview v-model="imageShow" :show-index="false" :images="images">
+    </van-image-preview>
+</div>
+<script src="../js/modules/search.js?v=1.0.0"></script>
+</body>
+</html>

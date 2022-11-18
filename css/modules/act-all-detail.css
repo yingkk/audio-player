@@ -1,0 +1,93 @@
+body {
+    background: #FFF;
+}
+#fg-app {
+    height: calc(100vh);
+    overflow: auto;
+    min-height: auto;
+}
+/*.footer-btns {*/
+/*    position: fixed;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    height: .6rem;*/
+/*    width: 100%;*/
+/*    box-sizing: border-box;*/
+/*    padding-top: .08rem;*/
+/*    background: #FFF;*/
+/*    box-shadow: 0 -0.05rem 0.24rem 0 rgba(0, 0, 0, 0.18);*/
+/*}*/
+/*.footer-btns .footer-btn {*/
+/*    height: .44rem;*/
+/*    line-height: .44rem;*/
+/*    text-align: center;*/
+/*}*/
+/*.footer-btn-1 {*/
+/*    background: #B3312A;*/
+/*    color: #FFFFFF;*/
+/*    font-size: 0.16rem;*/
+/*    cursor: pointer;*/
+/*    font-weight: bold;*/
+/*}*/
+/*.footer-btn-2 {*/
+/*    color: #999999;*/
+/*    background: #EDEDED;*/
+/*}*/
+
+.top-img {
+    width: 100%;
+    height: auto;
+}
+
+.main-c {
+    padding-bottom: .2rem;
+}
+
+.row {
+    padding-top: .2rem;
+}
+
+.row-header {
+    font-size: 0.16rem;
+    font-weight: bold;
+    line-height: 0.21rem;
+    padding-bottom: .1rem;
+}
+
+.row-2 ul{
+    box-sizing: border-box;
+    padding: .1rem;
+    background: #F8F8F8;
+}
+
+.row-2 ul li {
+    height: 0.35rem;
+    font-size: 0.12rem;
+    line-height: 0.35rem;
+    margin-bottom: .12rem;
+}
+
+.row-3 ul li img {
+    width: 100%;
+    height: auto;
+}
+
+
+.row-desc, .row-desc .rich-span {
+    color: #666;
+    font-size: .16rem !important;
+    line-height: .24rem !important;
+}
+
+.row-desc .rich-img{
+    margin-left: -.32rem;
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: .04rem;
+}
+.row-desc .rich-p {
+    margin: .05rem;
+    text-indent: .32rem !important;
+}
+
+

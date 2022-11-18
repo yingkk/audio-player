@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>讲座聆听详情</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">-->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <!-- <link rel="stylesheet" href="../css/base.css">  -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/lecture-listen-detail.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+
+<body>
+    <div ref="lectureListenDetail" id="lecture-listen-detail">
+        <div class="head-img">
+            <!-- <img src="../img/test-lecture-listen.png" alt=""> -->
+            <img :src="_fgConfig.baseURI+lectureDetail.coverUrl" :alt="lectureDetail.title">
+        </div>
+        <div class="container">
+            <div class="detail-head">
+                <div class="detail-title">
+                    {{ lectureDetail.title }}
+                </div>
+                <div class="detail-subTitle">
+                    中国武术博物馆 {{ lectureDetail.actDateStr }}
+                </div>
+            </div>
+            <div class="detail-body">
+                <div class="detail-body-content" v-html="lectureDetail.actSynopsis"></div>
+                <div class="content-end">
+                    <img src="../img/lecture-listen-content-end.png">
+                </div>
+                <div class="detail-body-attachs" v-if="lectureDetail.audioAttaches?.length">
+                    <div class="attach-title">
+                        <span>讲座音频</span> <img src="../img/audio-tag.png" alt="">
+                    </div>
+                    <div class="attach-list audio-list">
+                        <div class="audio" v-for="(item, i) in lectureDetail.audioAttaches">
+                            <div class="audio-left">
+                                <div class="audio-title"> {{ item.name }}</div>
+                                <div class="audio-time start"> {{ activeAudioIndex === i ? currentTimeFormatStr : '00:00:00' }} </div>
+                                <div class="audio-time end"> {{ durationFormatStr[i] }}</div>
+                                <audio ref="audio" @timeupdate="timeUpdate($event, i)" @canplay="audioCanPlay(i)"
+                                    preload="auto" hidden="hidden">
+                                    <source :src="_fgConfig.baseURI+item.playUrl" type="audio/mpeg">
+                                </audio>
+                                <input ref="range" type="range" :max="max" min="0" step="1"
+                                    :value="activeRangeIndex === i ? progressPoint : 0" @input="changeProgress(i)"
+                                    :style="{background: '-webkit-linear-gradient(top, #a56403, #3a290f) 0% 0% / '+ (activeRangeIndex === i ? progressPoint : 0)*100/max +'% 100% no-repeat'}">
+                            </div>
+                            <button class="audio-right" @click="handlePlayAudio(i)">
+                                <img
+                                    :src="activeAudioIndex === i && isAudioPlay? '../img/pause.png': '../img/play.png'">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-end" v-if="lectureDetail.videoAttaches?.length">
+                    <img src="../img/lecture-listen-content-end.png">
+                </div>
+                <div class="detail-body-attachs" v-if="lectureDetail.videoAttaches?.length">
+                    <div class="attach-title">
+                        <span>讲座视频</span> <img src="../img/video-tag.png" alt="">
+                    </div>
+                    <div class="attach-list video-list">
+                        <div class="video" v-for="(item, i) in lectureDetail.videoAttaches"
+                            @click="handleShowVideoDialog(item)">
+                            <div class="video-cover">
+                                <!-- <img src="../img/test-video-cover.png" alt=""> -->
+                                <img :src="_fgConfig.baseURI+item.coverUrl" :alt="item.title">
+                                <div class="video-cover-tag">
+                                    <img src="../img/lecture-listen-video-cover.png">
+                                </div>
+                                <div class="cover-mask"></div>
+                            </div>
+                            <div class="video-title">{{item.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <van-overlay v-if="showVideoDialog" :show="showVideoDialog" @click="handleHideVideoDialog()">
+            <div class="wrapper">
+                <div class="wrapper-inner">
+                    <div class="wrapper-head">
+                        <div class="wrapper-head-title">{{activeVideo.name}}</div>
+                        <div class="wrapper-close" @click="handleHideVideoDialog()">
+                            <van-icon name="close" size="0.48rem" />
+                        </div>
+                    </div>
+                    <div class="wrapper-body">
+                        <video controls :src="_fgConfig.baseURI+activeVideo.playUrl"
+                            :poster="_fgConfig.baseURI+activeVideo.postUrl"></video>
+                    </div>
+                </div>
+            </div>
+        </van-overlay>
+    </div>
+    <script src="../js/modules/lecture-listen-detail.js?v=1.0.3"></script>
+</body>
+
+</html>

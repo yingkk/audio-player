@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>活动/讲座预约</title>
+    <!-- <meta content="telephone=no" name="format-detection" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico"> -->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/appointment.css">
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="appointment" id="appointment">
+        <header class="header">
+            <img src="../img/logo.png" alt="">
+        </header>
+        <div class="container">
+            <div class="tabs">
+                <div class="tabs-item" @click="onTabIndexChange(0)">
+                    <span>活动预约</span>
+                </div>
+                <div class="divider"></div>
+                <div class="tabs-item" @click="onTabIndexChange(1)">
+                    <span>讲座预约</span>
+                </div>
+                <div :class="['tabs-line', !activeTabIndex ? 'active1': 'active2']"></div>
+            </div>
+            <div class="list">
+                <div class="list-item" v-for="(item, i) in actList" @click="handleAppointmentDetail(item.data.id)">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img :src="_fgConfig.baseURI+item.data.coverUrl" :alt="item.title">
+                            <!-- <img src="../img/test-appointment.png" alt=""> -->
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">{{item.data.title}}</div>
+                            <div class="sub-title reset">
+                                <span v-if="!activeTabIndex">活动时间：{{ item.data.actDate }} {{ item.data.actTime }}</span>
+                                <span v-if="activeTabIndex">讲座日期：{{ item.data.actDate }}</span>
+                                <span>{{!activeTabIndex ? '活动': '讲座'}}人数：{{ item.data.maxNum }}人</span>
+                            </div>
+                            <div class="address">
+                                {{!activeTabIndex ? '活动': '讲座'}}地点：{{ item.data.actAddress }}
+                            </div>
+                        </div>
+                    </div>
+                    <div :class="['list-item-tag', item.enabled === 4 ? 'not-appoint': (item.enabled === 3 ? 'end-appoint': 'can-appoint') ]" >{{ item.enabledDesc }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/appointment.js?v=1.0.0"></script>
+</body>
+
+</html>

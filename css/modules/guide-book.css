@@ -1,0 +1,207 @@
+.header {
+  width: 100%;
+  height: 2.3467rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../img/header-bg.png);
+  background-size: 100% 0.9067rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.header img {
+  width: 1.7333rem;
+  height: 1.6667rem;
+}
+
+#guide-book {
+  width: 100%;
+  height: calc(100% - 2.3467rem);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff8f0;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+  padding: 0.4267rem 0.64rem;
+  box-sizing: border-box;
+}
+
+.main .main-head {
+  flex: none;
+  width: 100%;
+  padding-bottom: 0.2133rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.main .main-head .head-title {
+  width: 2.1rem;
+  font-size: 0.48rem;
+  font-weight: bold;
+  color: #381918;
+  position: relative;
+}
+
+.main .main-body {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.main .main-body .info {
+  font-size: 0.2667rem;
+  font-weight: 400;
+  color: #797f7f;
+  line-height: 0.5467rem;
+}
+
+.main .main-body .swiper-block {
+  width: 100%;
+  margin-top: 0.5333rem;
+  position: relative;
+}
+
+.main .main-body .swiper-block .swiper-slide {
+  border-radius: 0.5333rem;
+}
+
+.main .main-body .swiper-block .swiper-pagination {
+  width: 100%;
+}
+
+.main .main-body .swiper-block .swiper-pagination .swiper-pagination-bullet {
+  width: 0.1067rem;
+  height: 0.1067rem;
+  background: #381918;
+  border-radius: 0.0533rem;
+  opacity: unset;
+}
+
+.main .main-body .swiper-block .swiper-pagination .swiper-pagination-bullet:not(:first-child) {
+  margin-left: 0.1333rem;
+}
+
+.main .main-body .swiper-block .swiper-pagination .swiper-pagination-bullet-active {
+  width: 0.48rem;
+}
+
+.main .main-body .visit-matter .visit-item {
+  width: 100%;
+  height: 100%;
+  margin-top: 0.56rem;
+}
+
+.main .main-body .visit-matter .visit-item .visit-item-title {
+  width: 2.0267rem;
+  height: 0.3733rem;
+  padding: 0.1067rem 0.24rem;
+  margin-bottom: 0.4rem;
+  line-height: 0.3733rem;
+  border-radius: 0.2667rem;
+  text-align: center;
+  font-size: 0.32rem;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #381918;
+}
+
+.main .main-body .visit-matter .visit-item .visit-item-content {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.32rem;
+  font-weight: 400;
+  color: #797f7f;
+  line-height: 2;
+}
+
+.main .main-body .visit-matter .visit-item .visit-item-content span {
+  display: inline-block;
+}
+
+.main .main-body .visit-matter .visit-item .content-img {
+  display: block;
+  width: 8.5467rem;
+  box-shadow: 0 0.0533rem 0.1333rem 0 rgba(166, 152, 135, 0.5);
+  margin: 0.4267rem auto;
+}
+
+.main .main-body .visit-matter .visit-item .visit-map-info {
+  margin-top: 0.56rem;
+}
+
+.main .main-body .visit-matter .visit-item .visit-map-info .map-item {
+  padding-left: 0.56rem;
+  margin-bottom: 0.32rem;
+  position: relative;
+}
+
+.main .main-body .visit-matter .visit-item .visit-map-info .map-item:nth-child(1):after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -0.2133rem;
+  width: 0.36rem;
+  height: 0.4267rem;
+  background-image: url(../../img/address.png);
+  background-size: 0.36rem 0.4267rem;
+  background-repeat: no-repeat;
+}
+
+.main .main-body .visit-matter .visit-item .visit-map-info .map-item:nth-child(2):after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -0.16rem;
+  width: 0.3467rem;
+  height: 0.32rem;
+  background-image: url(../../img/phone.png);
+  background-size: 0.3467rem 0.32rem;
+  background-repeat: no-repeat;
+}
+
+.main .main-body .visit-matter .visit-item .visit-map-info .map-item:nth-child(3):after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -0.1333rem;
+  width: 0.3467rem;
+  height: 0.2667rem;
+  background-image: url(../../img/email.png);
+  background-size: 0.3467rem 0.2667rem;
+  background-repeat: no-repeat;
+}
+
+.main .main-body .visit-matter .visit-item ul {
+  font-size: 0.2667rem;
+  font-weight: 400;
+  color: #797f7f;
+  font-weight: 300;
+  color: #381918;
+  list-style: unset;
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.main .main-body .visit-matter .visit-item li {
+  list-style: unset;
+  line-height: 2;
+}
+
+.main .indent {
+  text-indent: 0.6rem;
+}
+
+.main ::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}

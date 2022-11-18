@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预约平台</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/visit-group.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app">
+    <step-1 :server-date="serverDate" @step-next="doClickStepNext" @full-loading="doLoading"
+            @change-data="changeStep" :step-data="stepData1" v-if="stepIndex == 1"></step-1>
+    <step-2 ref="step2" @step-next="doClickStepNext" @step-prev="doClickStepPrev"
+            :step-data1="stepData1" :step-data2="stepData2"
+            @change-data="changeStep" v-if="stepIndex == 2"></step-2>
+    <step-3 @step-next="doClickStepNext" @step-prev="doClickStepPrev"
+            @success-data="setSuccessData"
+            :step-data1="stepData1" :step-data2="stepData2"
+            v-if="stepIndex == 3"></step-3>
+    <step-4 :success-data="successData" v-if="stepIndex == 4"></step-4>
+    <!--    <div class="container">-->
+    <!--        <div class="tips">-->
+    <!--            <div class="tips-header">注意</div>-->
+    <!--            <div class="tips-c">-->
+    <!--                文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>
+
+<div class="template" id="step1">
+    <div class="step step-1 container buttons-step">
+        <div class="item">
+            <div class="item-header">选择入馆日期</div>
+            <ul class="date-items-header cl">
+                <li>一</li>
+                <li>二</li>
+                <li>三</li>
+                <li>四</li>
+                <li>五</li>
+                <li>六</li>
+                <li>日</li>
+            </ul>
+            <ul class="date-items cl">
+                <li @click="doClickDayItem(item)" v-for="item in dayItems"
+                    :class="{today: item.today, disabled: item.enabled != 1, selected:choseDay && (item.dateFormat == choseDay.dateFormat)}"
+                >
+                    <div class="value">{{item.dateFormat}}</div>
+                    <div class="state"> {{stateMap[item.enabled]}}</div>
+                </li>
+            </ul>
+        </div>
+        <div class="item">
+            <div class="item-header">选择入馆时间段</div>
+            <ul v-if="timeItems.length" class="time-items cl">
+                <li v-for="item in timeItems"
+                    :class="{disabled: item.state == 0, selected: choseTime && (item.musInterval.intervalShow == choseTime.musInterval.intervalShow) }">
+                    <div @click="doClickTimeItem(item)" class="time-item">
+                        <div class="value">{{item.musInterval.intervalShow}}</div>
+                        <div class="state">{{item.state == 0 ? '不可预约' : '可预约'}}</div>
+                    </div>
+                    <div class="time-item-desc">{{item.musInterval.stopIntTimeShow}}停止进馆</div>
+                </li>
+            </ul>
+            <ul v-else class="time-items cl no-times">
+                 暂无可选时间段
+            </ul>
+        </div>
+        <!-- <div class="item">
+            <div class="item-header">是否预约讲解</div>
+            <div class="item-c">
+                <van-radio-group v-model="isGuide" direction="horizontal">
+                    <van-radio :name="1">预约</van-radio>
+                    <van-radio :name="0">不预约</van-radio>
+                </van-radio-group>
+                <van-radio-group v-if="isGuide" v-model="guideTime" class="guide-time">
+                    <van-radio :name="0">约30分钟</van-radio>
+                    <van-radio :name="1">约60分钟</van-radio>
+                    <van-radio :name="2">约60分钟以上</van-radio>
+                </van-radio-group>
+            </div>
+        </div> -->
+        <!--        <div class="tips">-->
+        <!--            <div class="tips-header">注意</div>-->
+        <!--            <div class="tips-c">-->
+        <!--                文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明-->
+        <!--                文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明-->
+        <!--                文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明-->
+        <!--                文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="step-footer-buttons container">
+            <van-button :disabled="!this.choseDay || !this.choseTime" @click="doClickNext(2)" block color="#B3312A">
+                下一步
+            </van-button>
+        </div>
+    </div>
+</div>
+<div class="template" id="step2">
+    <div class="step buttons-step container step-2">
+        <div class="row row-1">
+            <div class="yy-time-header">预约时间</div>
+            <div class="yy-time">
+                {{stepData1.choseDay.date}} {{stepData1.choseTime.musInterval.intervalShow}}<span v-if="stepData1.isGuide">({{yyJJMap[stepData1.guideTime]}})</span>
+            </div>
+        </div>
+        <van-button v-if="!dataValid" @click="yyPopup" block plain icon="add-o" icon-position="right" type="info">
+            添加预约人
+        </van-button>
+
+        <div v-if="dataValid" class="row row-2">
+            <div class="yy-info-header">预约人信息</div>
+            <div class="yy-info">
+                <ul class="cl">
+                    <li>序号</li>
+                    <li>姓名</li>
+                    <li>手机号</li>
+                    <li>证件类型</li>
+                    <li>性别</li>
+                    <li>证件号码</li>
+                </ul>
+                <ul class="cl">
+                    <li style="font-weight: bold; color: #B3312A;">01</li>
+                    <li class="sl">{{data.name}}</li>
+                    <li>{{data.phone}}</li>
+                    <li>{{idCardTypesMap1[data.cardType]}}</li>
+                    <li>{{sexMap1[data.sex]}}</li>
+                    <li>{{data.cardNum}}</li>
+                </ul>
+                <div @click="yyPopup" class="yy-info-edit">
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-4" v-if="dataValid && data.cardType != '001'">
+            非身份证, 只可自己预约参观，不可携带他人。
+        </div>
+        <div class="row row-4" v-if="dataValid && ageType == 1">
+            系统监测到您的年龄小于13周岁，无法预约，建议由成年人陪同预约参观。
+        </div>
+        <div class="row row-4" v-if="dataValid && ageType == 2">
+            系统监测到您的年龄小于18周岁，只可自己预约参观，不可携带他人，如需携带他人，请由成年人预约。
+        </div>
+
+        <van-button style="margin-top: .12rem" v-if="dataValid && !groupInfoValid && ageType > 2" @click="yyPopup2"
+                    block plain icon="add-o" icon-position="right" type="info">
+            添加团体资质
+        </van-button>
+        <div v-if="dataValid && groupInfoValid && ageType > 2" class="zz-items-header">团体资质信息</div>
+        <div v-if="dataValid && groupInfoValid && ageType > 2" class="zz-items">
+            <ul class="ul-1 cl">
+                <li>团体类型</li>
+<!--                <li>参观性质</li>-->
+                <li>营业执照编码</li>
+                <li>部门</li>
+                <li>单位完整名称</li>
+            </ul>
+            <ul class="ul-2 cl">
+                <li class="sl">{{groupTypesMap[groupInfo.groupType]}}</li>
+<!--                <li class="sl">暂无</li>-->
+                <li class="sl">{{groupInfo.companyCode}}</li>
+                <li class="sl">{{groupInfo.deptName}}</li>
+                <li class="sl">{{groupInfo.groupName}}</li>
+            </ul>
+            <van-uploader v-model="fileList" :deletable="false" multiple :max-count="1">
+            </van-uploader>
+            <div @click="yyPopup2" class="group-type-edit">
+            </div>
+        </div>
+
+        <div v-if="dataValid && groupInfoValid && ageType > 2" class="tx-items-header">团体成员信息</div>
+        <ul v-if="dataValid && groupInfoValid && ageType > 2" class="tx-items">
+            <li v-for="(item, i) in txArr">
+                <div class="ti-row ti-row-1">
+                    <span class="sl">{{(i+2) < 10 ? '0' + (i+2) : (i+2)}} {{item.name}}</span><span>{{sexMap1[item.sex]}}</span><span>{{relationsMap1[item.gx]}}</span>
+                </div>
+                <div class="ti-row ti-row-2">
+                    <div>手机号：{{item.phone}}</div>
+                    <div>{{idCardTypesMap1[item.cardType]}}：{{item.cardNum}}</div>
+                </div>
+                <div class="ti-action ti-edit" @click="addTxInfo(i)"></div>
+                <div class="ti-action ti-delete" @click="deleteTxInfo(i)"></div>
+            </li>
+        </ul>
+        <div v-if="dataValid && groupInfoValid && ageType > 2 && txArr.length < (groupLimit.groupMaxNum - 1)" class="row row-3">
+            <van-button @click="yyPopup1" plain block icon="add-o" icon-position="right" type="info">
+                添加团体成员
+            </van-button>
+            <div class="btn-desc">添加{{groupLimit.groupMinNum}}-{{groupLimit.groupMaxNum}}位团体成员</div>
+        </div>
+        <div class="row row-4" v-if="dataValid && ageType == 4">
+            系统监测到您的年龄大于70周岁，建议由小于70周岁的成年人陪同参观，若无需陪同请直接点击“下一步”
+        </div>
+        <div class="step-footer-buttons step-footer-buttons-2 container">
+            <van-button @click="doClickPrev(1)" type="primary">上一步</van-button>
+            <van-button @click="doClickNext(3)" :disabled="!dataValid || ageType == 1" type="primary">下一步</van-button>
+        </div>
+
+        <van-popup v-if="yyPersonShow" class="yy-form-popup" :close-on-click-overlay="false"
+                   v-model="yyPersonShow" closeable close-icon="close" @click-close-icon="clickCancelChangeData">
+            <div class="yy-form-header">
+                <div class="title">添加预约人<span>01</span></div>
+                <!--                <div class="title-desc">最多添加两位未成年人</div>-->
+            </div>
+            <van-form ref="popupForm1" class="popup-form popup-form-1 cl" validate-first
+                      @failed="onYYFormFailed" @submit="onYYFormSubmit">
+                <van-field required label="姓名" v-model="editData.name" name="name"
+                           :rules="[{ validator: validatorName, message: '请输入姓名' },{ validator: validatorNameLength, message: '长度至少两位' }]"></van-field>
+                <van-field required readonly clickable name="sex"
+                           :value="sexMap1[editData.sex]" right-icon="arrow-down" label="性别"
+                           @click="showSexPicker = true">
+                </van-field>
+
+                <van-field required readonly clickable name="cardType"
+                           :value="idCardTypesMap1[editData.cardType]" right-icon="arrow-down"
+                           label="证件类型" @click="showCardTypePicker = true">
+                </van-field>
+                <van-field required label="证件号码" v-model="editData.cardNum" name="cardNum"
+                           :rules="[{ validator: validatorIdCard, message: '请输入正确的证件号' }]">
+                </van-field>
+                <van-field required label="手机号" v-model="editData.phone" name="phone"
+                           :rules="[{ validator: validatorPhone, message: '请输入正确手机号' }]">
+                </van-field>
+                <div>
+                    <van-button block type="primary" native-type="submit">确认</van-button>
+                </div>
+            </van-form>
+
+        </van-popup>
+        <van-popup v-model="showSexPicker" position="bottom">
+            <van-picker v-if="showSexPicker" @confirm="onSexConfirm" @cancel="showSexPicker = false" show-toolbar
+                        title="选择性别" :columns="sexColumns" :default-index="editData.sex"/>
+        </van-popup>
+        <van-popup v-model="showCardTypePicker" position="bottom">
+            <van-picker v-if="showCardTypePicker" @confirm="onCardTypeConfirm"
+                        @cancel="showCardTypePicker = false" show-toolbar
+                        title="选择证件类型" :columns="cardTypeColumns"
+                        :default-index="editData.cardTypeIndex"/>
+        </van-popup>
+        <van-popup v-if="yyTxShow" class="yy-form-popup" :close-on-click-overlay="false"
+                   v-model="yyTxShow" closeable close-icon="close">
+            <div class="yy-form-header">
+                <div class="title">
+                    添加团体成员<span>{{(txEditIndex +2) < 10 ? '0' + (txEditIndex +2) : (txEditIndex +2)}}</span></div>
+                <div class="title-desc">添加{{groupLimit.groupMinNum}}-{{groupLimit.groupMaxNum}}位团体成员</div>
+            </div>
+            <van-form ref="popupForm2" class="popup-form popup-form-2 cl" validate-first
+                      @failed="onYYFormFailed1" @submit="onYYFormSubmit1">
+                <van-field required label="姓名" v-model="txEditData.name" name="name"
+                           :rules="[{ validator: validatorName, message: '请输入姓名' },{ validator: validatorNameLength, message: '长度至少两位' }]"></van-field>
+                <van-field required readonly clickable name="sex"
+                           :value="sexMap1[txEditData.sex]" right-icon="arrow-down" label="性别"
+                           @click="showSexPicker1 = true">
+                </van-field>
+
+                <van-field required readonly clickable name="cardType"
+                           :value="idCardTypesMap1[txEditData.cardType]" right-icon="arrow-down"
+                           label="证件类型" @click="showCardTypePicker1 = true">
+                </van-field>
+                <van-field required label="证件号码" v-model="txEditData.cardNum" name="cardNum"
+                           :rules="[{ validator: validatorIdCard2, message: '请输入正确的证件号' },{ validator: validatorIdCard1, message: '证件号与预约人或者其他团体成员重复' }]">
+                </van-field>
+                <van-field label="手机号" v-model="txEditData.phone" name="phone"
+                           :rules="[{ validator: validatorPhone1, message: '请输入正确手机号' }]">
+                </van-field>
+                <van-field required readonly clickable name="gx" label="关系"
+                           :value="relationsMap1[txEditData.gx]" right-icon="arrow-down" label=""
+                           @click="showRelationPicker1 = true">
+                </van-field>
+                <div>
+                    <van-button block type="primary" native-type="submit">确认</van-button>
+                </div>
+            </van-form>
+        </van-popup>
+        <van-popup v-model="showSexPicker1" position="bottom">
+            <van-picker v-if="showSexPicker1" @confirm="onSexConfirm1" @cancel="showSexPicker1 = false" show-toolbar
+                        title="选择性别" :columns="sexColumns" :default-index="txEditData.sex"/>
+        </van-popup>
+        <van-popup v-model="showCardTypePicker1" position="bottom">
+            <van-picker v-if="showCardTypePicker1" @confirm="onCardTypeConfirm1"
+                        @cancel="showCardTypePicker1 = false" show-toolbar
+                        title="选择证件类型" :columns="cardTypeColumns"
+                        :default-index="txEditData.cardTypeIndex"/>
+        </van-popup>
+        <van-popup v-model="showRelationPicker1" position="bottom">
+            <van-picker v-if="showRelationPicker1" @confirm="onRelationConfirm1"
+                        @cancel="showRelationPicker1 = false" show-toolbar
+                        title="选择关系" :columns="relationColumns"
+                        :default-index="txEditData.gxIndex"/>
+        </van-popup>
+        <van-popup v-if="groupInfoShow" class="yy-form-popup yy-form-popup-2" :close-on-click-overlay="false"
+                   v-model="groupInfoShow" closeable close-icon="close" @click-close-icon="clickCancelChangeData2">
+            <div class="yy-form-header">
+                <div class="title">团体资质信息</div>
+            </div>
+            <van-form ref="popupForm2" class="popup-form popup-form-3 cl" validate-first
+                      @failed="onYYFormFailed2" @submit="onYYFormSubmit2">
+                <van-field required readonly clickable name="groupType"
+                           :value="groupTypesMap[editGroupInfo.groupType]" right-icon="arrow-down"
+                           label="团体类型" @click="showGroupTypePicker2 = true">
+                </van-field>
+                <van-field required label="部门" v-model="editGroupInfo.deptName" name="deptName"
+                           :rules="[{ validator: validatorNonEmpty, message: '请输入部门名称' }]"></van-field>
+                <van-field required label="单位完整名称" v-model="editGroupInfo.groupName" name="groupName"
+                           :rules="[{ validator: validatorNonEmpty, message: '请输入单位完整名称' }]">
+                </van-field>
+                <van-field required label="营业执照编码" v-model="editGroupInfo.companyCode" name="companyCode"
+                           :rules="[{ validator: validatorNonEmpty, message: '请输入营业执照编码' },{ validator: validatorCompanyCode, message: '请输入6-20位营业执照编码' }]">
+                </van-field>
+                <div>
+                    <van-button block type="primary" native-type="submit">确认</van-button>
+                </div>
+                <van-uploader :max-count="1" v-model="tempFileList" :before-read="beforeRead" :after-read="afterRead" @delete="deleteFile">
+                    <img class="default-upload-img" src="../img/upload.png">
+                </van-uploader>
+            </van-form>
+        </van-popup>
+        <van-popup v-model="showGroupTypePicker2" position="bottom">
+            <van-picker v-if="showGroupTypePicker2" @confirm="onGroupTypeConfirm2"
+                        @cancel="showGroupTypePicker2 = false" show-toolbar
+                        title="选择团体类型" :columns="groupTypeColumns"
+                        :default-index="editGroupInfo.groupTypeIndex"/>
+        </van-popup>
+    </div>
+</div>
+<div class="template" id="step3">
+    <div class="step container buttons-step step-3">
+        <div class="row row-1">
+            <div class="yy-time-header">预约时间</div>
+            <div class="yy-time">
+                {{stepData1.choseDay.date}} {{stepData1.choseTime.musInterval.intervalShow}}<span v-if="stepData1.isGuide">({{yyJJMap[stepData1.guideTime]}})</span>
+            </div>
+        </div>
+        <div class="zz-items-header" style="margin-top: 0">团体信息</div>
+        <div class="zz-items" style="margin-bottom: .12rem;">
+            <ul class="ul-1 cl">
+                <li>团体类型</li>
+<!--                <li>参观性质</li>-->
+                <li>营业执照编码</li>
+                <li>部门</li>
+                <li>单位完整名称</li>
+            </ul>
+            <ul class="ul-2 cl">
+                <li class="sl">{{groupTypesMap[groupInfo.groupType]}}</li>
+                <li class="sl">暂无</li>
+                <li class="sl">{{groupInfo.companyCode}}</li>
+                <li class="sl">{{groupInfo.deptName}}</li>
+                <li class="sl">{{groupInfo.groupName}}</li>
+            </ul>
+            <van-uploader v-model="fileList" :deletable="false" multiple :max-count="1">
+            </van-uploader>
+        </div>
+        <div class="zz-items-header" style="margin: 0 0 .08rem">团体成员信息(包含预约人{{stepData2.txArr.length + 1}})</div>
+        <ul class="tx-items" style="padding-top: 0">
+            <li>
+                <div class="ti-row ti-row-1">
+                    <span class="sl">01 {{stepData2.data.name}}</span><span>{{sexMap1[stepData2.data.sex]}}</span><span>预约人</span>
+                </div>
+                <div class="ti-row ti-row-2">
+                    <div>手机号：{{stepData2.data.phone}}</div>
+                    <div>{{idCardTypesMap1[stepData2.data.cardType]}}：{{stepData2.data.cardNum}}</div>
+                </div>
+            </li>
+            <li v-for="(item, i) in stepData2.txArr">
+                <div class="ti-row ti-row-1">
+                    <span class="sl">{{(i+2) < 10 ? '0' + (i+2) : (i+2)}} {{item.name}}</span><span>{{sexMap1[item.sex]}}</span><span>{{relationsMap1[item.gx]}}</span>
+                </div>
+                <div class="ti-row ti-row-2">
+                    <div>手机号：{{item.phone}}</div>
+                    <div>{{idCardTypesMap1[item.cardType]}}：{{item.cardNum}}</div>
+                </div>
+            </li>
+        </ul>
+        <div class="row row-3" style="margin-top: .12rem; margin-bottom: .12rem; line-height: .19rem">
+            您好！您将为以上观众预约 {{stepData1.choseDay.date}} {{stepData1.choseTime.musInterval.intervalShow}}
+            的参观，请确认相关信息后提交您的预约订单！
+        </div>
+        <div class="step-footer-buttons step-footer-buttons-2 container">
+            <van-button @click="doClickPrev(2)" type="primary">上一步</van-button>
+            <van-button @click="doClickNext(4)" :disabled="sureLoading" :loading="sureLoading" type="primary">确认预约
+            </van-button>
+        </div>
+        <van-popup v-model="mzShow" class="mz-show">
+            <div>
+                <div class="tips" style="padding: 0 .12rem">
+                    <div class="mz-show-title">安全责任告知书</div>
+                    <div class="mz-show-c">
+                        <!-- 为有效预防新型冠状病毒，切实保障观众和全体工作人员的身体健康和生命安全，维护正常的参观秩序，中国证券博物馆根据相关规定，制定此安全责任告知书：<br>
+                        1. 观众/带队人员为本人/团队人员在馆内的一切行为负责，配合本馆做好相关防疫工作。<br>
+                       <span style="color:red"> 2. 对14天内去过疫情中高风险地区所在地级市（行程卡星号标记的地区）、有感冒咳嗽等身体健康异常情况的，暂不接受进馆参观。</span><br>
+                        3. 承诺本人/团队人员在进入本馆前，体温正常、未往返过疫情重点国家(地区)或已结束隔离观察期。对疫情不得迟报、慌报、瞒报、漏报，如因责任人玩忽职守造成本馆内传染病传播流行，将追究相应责任。<br>
+                        4. 带队人员准确掌握团队人员的个人信息，包括姓名、地址、通讯方式等详细情况。<br>
+                        5. 开放期间在馆参观总人数控制在不超过100人，必要时分批限流。<br>
+                        观众在本馆参观学习期间，责任书始终有效。<br>
+                        所有观众来馆参观前需仔细阅读本安全责任告知书，经确认合规后方可来馆进行参观。<br> -->
+
+                        为有效预防新型冠状病毒，切实保障观众和全体工作人员的身体健康和生命安全，维护正常的参观秩序，中国证券博物馆根据相关规定，制定此安全责任告知书：<br>
+                        1. 观众/带队人员为本人/团队人员在馆内的一切行为负责，配合本馆做好相关防疫工作。<br>
+                        <span style="color:red"> 2. 对无72小时核酸检测阴性证明、参观前10日内有境外旅居史、参观前7天内有国内疫情中、高风险区所在县（市、区、旗）旅居史或有感冒咳嗽等身体健康异常情况的，暂不接受进馆参观。</span><br>
+                        3. 承诺本人/团队人员在进入本馆前，体温正常、未往返过疫情重点国家(地区)或已结束隔离观察期。对疫情不得迟报、慌报、瞒报、漏报，如因责任人玩忽职守造成本馆内传染病传播流行，将追究相应责任。<br>
+                        4. 带队人员准确掌握团队人员的个人信息，包括姓名、地址、通讯方式等详细情况。<br>
+                        观众在本馆参观学习期间，责任书始终有效。<br>
+                        所有观众来馆参观前需仔细阅读本安全责任告知书，经确认合规后方可来馆进行参观。<br>
+                    </div>
+                    <div class="mz-show-title">预约须知</div>
+                    <div class="mz-show-c">
+                        1. 观众要严格遵守国家法律法规和本馆各项规章制度，严禁携带易燃、易爆、有毒有害等危险品及宠物进入展馆。<br/>
+                        2. 禁止在展馆内吸烟。<br/>
+                        3. 爱护公物，不在文物、展品上涂刻，不随意触摸展柜和其它物品，不在展厅内乱涂乱抹、乱贴乱画。不随意污损、破坏公用设施，节约水电资源。<br/>
+                        4. 保持馆内清洁、卫生。请勿携带有色饮料进入展厅，禁止随地吐痰、乱扔果皮纸屑。<br/>
+                        5. 保持馆内安静，禁止随意走动，追逐打闹，推搡拥挤、大声喧哗。<br/>
+                        6. 厅内请勿摄像，拍照时请勿使用闪光灯及三角架。<br/>
+                        7. 小心玻璃、注意安全。请勿爬靠或挤压玻璃展柜，以防玻璃破裂，造成藏品损坏和伤及身体。<br/>
+                        8. 酗酒者、衣冠不整者以及无行为能力或限制行为能力者无监护人陪伴的，谢绝入馆。<br/>
+                        9. 未成年人参观需由家长带领，以确保参观安全；老年、行动不便及身患疾病的观众请在保证个人安全的情况下进行参观。<br/>
+                        10. 服从管理，听从指挥，保证参观活动正常进行。如遇观众高峰时段或紧急情况，请听从工作人员安排，有序进场、退场。
+                    </div>
+                   
+                </div>
+                <van-button block class="sure" @click="clickSure" icon="success" type="primary">
+                    我已阅读并同意预约须知及责任书
+                </van-button>
+            </div>
+        </van-popup>
+    </div>
+</div>
+<div class="template" id="step4">
+    <div class="step container buttons-step step-4" style="background-color: #fff">
+        <div class="success">
+            <img src="../img/gz-gzh.png">
+            <div class="desc">订单提交成功等待审核，请关注公众号查看我的预约信息</div>
+        </div>
+        <div class="step-footer-buttons container">
+            <van-button @click="clickBack" block type="primary">返回</van-button>
+        </div>
+    </div>
+</div>
+
+<script src="../js/modules/visit-group.js?v=1.0.2"></script>
+</body>
+</html>

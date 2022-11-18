@@ -1,0 +1,120 @@
+.header {
+  width: 100%;
+  height: 2.3467rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../img/header-bg.png);
+  background-size: 100% 0.9067rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.header img {
+  width: 1.7333rem;
+  height: 1.6667rem;
+}
+
+#collect {
+  width: 100%;
+  height: calc(100% - 2.3467rem);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #fff8f0;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+  padding: 0.4267rem 0.64rem;
+  box-sizing: border-box;
+}
+
+.container .container-head {
+  flex: none;
+  width: 100%;
+  padding-bottom: 0.2133rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .container-head .head-title {
+  font-size: 0.48rem;
+  font-weight: bold;
+  color: #381918;
+}
+
+.container .container-head .head-tips {
+  font-size: 0.32rem;
+  font-weight: 300;
+  color: rgba(56, 25, 24, 0.7);
+  margin-top: 0.2933rem;
+}
+
+.container .container-body {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.container .container-body .list-item {
+  height: 5.5733rem;
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+
+.container .container-body .list-item .list-item-cover {
+  width: 4.1867rem;
+  height: 4.2933rem;
+}
+
+.container .container-body .list-item .list-item-info {
+  width: 4.1867rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 1.28rem;
+  background-color: #fff;
+  padding: 0.24rem;
+  box-sizing: border-box;
+}
+
+.container .container-body .list-item .list-item-info .list-item-title {
+  width: 3rem;
+  font-size: 0.3467rem;
+  font-weight: bold;
+  color: #381918;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.container .container-body .list-item .list-item-info .list-item-view {
+  width: 0.24rem;
+  height: 0.4533rem;
+}
+
+.container .container-body .list-item {
+  margin-bottom: 0.5333rem;
+}
+
+.container .container-body .list-item:nth-child(2n + 1) {
+  margin-right: 0.32rem;
+}
+
+.container ::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}
+
+img {
+  height: 100%;
+}

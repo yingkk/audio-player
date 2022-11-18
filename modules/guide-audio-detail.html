@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>语音导览详情</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">-->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <!-- <link rel="stylesheet" href="../css/base.css">  -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/guide-audio-detail.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="guide-audio-detail" id="guide-audio-detail">
+        <div class="head-img">
+            <!-- <img src="../img/test-vr-detail.png" alt=""> -->
+            <img :src="_fgConfig.baseURI+audioDetail.coverUrl" :alt="audioDetail.title">
+        </div>
+        <div class="container" v-if="audioDetail">
+            <div class="audio">
+                <div class="audio-left">
+                    <div class="audio-title"> {{ audioDetail.attach?.name }}</div>
+                    <!-- <div class="audio-time start"> 00:00 </div>
+                    <div class="audio-time end"> 02:35</div> -->
+                    <div class="audio-time start"> {{ currentTimeFormatStr }} </div>
+                    <div class="audio-time end"> {{ durationFormatStr }}</div>
+                    <audio ref="audio" @timeupdate="timeUpdate($event)" @canplay="audioCanPlay"
+                                    preload="auto" hidden="hidden">
+                        <source :src="_fgConfig.baseURI+audioDetail.attach?.playUrl" type="audio/mpeg">
+                    </audio>
+                    <input ref="range" type="range" :max="max" min="0" step="1" :value="progressPoint"
+                        @input="changeProgress"
+                        :style="{background: '-webkit-linear-gradient(top, #a56403, #3a290f) 0% 0% / '+ progressPoint*100/max +'% 100% no-repeat'}">
+                </div>
+                <div class="audio-right" @click="handlePlayAudio">
+                    <img :src="isAudioPlay ? '../img/pause.png': '../img/play.png'">
+                </div>
+            </div>
+            <div class="detail">
+                <div class="detail-head">
+                    <div class="detail-title">
+                        {{ audioDetail.title }}
+                    </div>
+                    <div class="detail-subTitle">
+                        中国武术博物馆 {{ audioDetail.publishDateStr }}
+                    </div>
+                </div>
+                <div class="detail-content" v-html="audioDetail.introduction"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/guide-audio-detail.js?v=1.0.2"></script>
+</body>
+
+</html>

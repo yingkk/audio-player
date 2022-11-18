@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预约平台</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/act-all-detail.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app">
+    <img v-if="data && data.data" class="top-img" :src="data.data.imageURL">
+    <div class="main-c container" v-if="data && data.data">
+        <div class="row row-1">
+            <div class="row-header sl" >{{data.data.title}}</div>
+            <div v-if="data.data.setAppo < 3">活动时间： {{data.data.actDateStr}} {{data.data.actTime}}</div>
+            <div v-if="data.data.setAppo < 3">预约截止时间： {{data.data.appoCutoffTimeStr}}</div>
+            <div v-if="data.data.setAppo < 3">活动地点：{{data.data.actAddress}}</div>
+<!--            <div v-if="data.data.setAppo < 3">活动对象：{{data.data.actObject}}</div>-->
+            <div v-if="data.data.setAppo < 3">已预约{{data.appoNum}}人 / 总名额{{data.data.maxNum}}人</div>
+        </div>
+        <div v-if="data.data.setAppo < 3 && data.data.isNeedProps && actProps.length" class="row row-2">
+            <div class="row-header">活动道具</div>
+            <ul class="ul">
+                <li v-for="(item, i) in actProps" class="li">{{item}}</li>
+            </ul>
+        </div>
+        <div v-if="data.data.setAppo > 2" class="row row-2">
+            <div class="row-header">活动道具</div>
+            <ul>
+                <li>A 我是红黄马甲（道具）</li>
+                <li>B 红色故事会（道具）</li>
+                <!-- <li>C 新战疫新力量（道具）</li> -->
+                <li>C 党旗（合影旗）</li>
+                <li>D 入党誓词（合影旗）</li>
+            </ul>
+        </div>
+        <div class="row row-3">
+            <div class="row-header">活动介绍</div>
+            <div class="row-desc" v-html="data.data.actDescribe"></div>
+            <ul v-if="data.data.files" class="cl">
+                <li v-for="(item, i) in data.data.files">
+                    <img :src="item">
+                </li>
+            </ul>
+        </div>
+        <div class="row row-4">
+            <div class="row-header">温馨提示</div>
+            <div class="row-desc">
+                1.现场有序排队，请提前安排好时间，以免迟到。<br/>
+                2.若您无法到馆，请登录官网或微信端预约平台，进入【个人中心】查看预约记录中的订单，点击【退票】即可完成退票。<br/>
+                3.凡未佩戴口罩者，健康码显示非绿色者禁止入馆。
+            </div>
+        </div>
+    </div>
+<!--    <div class="footer-btns container">-->
+<!--        <div class="footer-btn footer-btn-1">-->
+<!--            活动预约-->
+<!--        </div>-->
+<!--        <div class="footer-btn footer-btn-2">-->
+<!--            已过期-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+<script src="../js/modules/act-all-detail.js?v=1.1.1"></script>
+</body>
+</html>

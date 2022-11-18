@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>藏品欣赏详情</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">-->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <!-- <link rel="stylesheet" href="../css/base.css">  -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/collection-detail.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="collection-detail" id="collection-detail">
+        <div class="head-img">
+            <img :src="_fgConfig.baseURI+collectionDetail.coverUrl" :alt="collectionDetail.title">
+            <!-- <img src="../img/test-collect-detail.png" alt=""> -->
+            <a class="head-3d" :href="collectionDetail.url">
+                <img src="../img/3d.png" alt="">
+            </a>
+        </div>
+        <div class="container">
+            <div class="detail-head">
+                <div class="title">{{ collectionDetail.title }}</div>
+                <!-- <div class="tags">
+                    <span>清朝</span>
+                    <span>长300厘米</span>
+                </div> -->
+            </div>
+            <div class="detail-body">
+                <div class="detail-body-title">• 文物详解 •</div>
+                <div class="detail-body-content" v-html="collectionDetail.introduction">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/collection-detail.js?v=1.0.0"></script>
+</body>
+
+</html>

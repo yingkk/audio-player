@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>参观预约</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+     <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico"> -->
+     <!-- <link rel="stylesheet" href="../lib/vant/vant-rem.css"> -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../lib/swiper/swiper-bundle.css">
+    <link rel="stylesheet" href="../css/modules/guide-book.css">
+
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../lib/swiper/swiper-bundle.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <!--  -->
+
+    <script src="../lib/vue/vue.js"></script>
+    <!-- <script src="../lib/vant/vant.min.js"></script> -->
+</head>
+
+<body>
+    <div ref="guide-book" id="guide-book">
+        <header class="header">
+            <img src="../img/logo.png" alt="">
+        </header>
+        <div class="main">
+            <div class="main-head">
+                <div class="head-title">参观指南</div>
+            </div>
+            <div class="main-body">
+                <div class="info indent">
+                    中国武术博物馆是坐落于上海体育学院内的博物馆，始建于2005年，2007年建成。总面积约2500平方米，它是目前世界上第一家全方位展示武术历史与文化的博物馆，现有藏品数千件，分为“序厅，拳械厅，历史厅，临展厅，立体影院和科学看武术”互动展厅。
+                </div>
+                <div class="swiper-block">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="../img/guide-book-swiper1.png">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="../img/guide-book-swiper2.png">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="../img/guide-book-swiper3.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <div class="visit-matter">
+                    <div class="visit-item">
+                        <div class="visit-item-title">• 开放时间 •</div>
+                        <div class="visit-item-content">
+                            <span>开放时间为每周二至周日9:00-16:30 </span>
+                            <span>每日16:00停止入馆（参观高峰期，提前停止入馆）</span>
+                            <span>每周一为闭馆日（逢法定节假日顺延）</span>
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <div class="visit-item-title">• 参观须知 •</div>
+                        <ul>
+                            <li>本馆的基本陈列常年免费向公众开放。</li>
+                            <li>未成年人、残疾或其他行动不便者，进入馆内必须有行动正常成年人或监护人陪同，安全由陪同参观者自行负责。</li>
+                            <li>酗酒、衣冠不整、携带宠物的，谢绝入馆参观。 </li>
+                            <li>严禁将易燃易爆、管制器械等危险品带入馆内。 </li>
+                            <li>自觉爱护公共设施，请勿触摸展品，请勿攀爬围栏。</li>
+                            <li>展厅内摄像、拍照请勿用闪关灯及支架。 </li>
+                            <li>自觉保持环境卫生，请勿随意丢弃杂物，全馆禁止吸烟。 </li>
+                            <li>自觉遵守参观秩序，服从馆内工作人员现场引导和指挥。如遇本馆重大或临时性活动，请遵从本馆安排。</li>
+                            <li>团体（20人以上）参观，须提前三天预约，经确认成功后须按约定时间参观。 </li>
+                            <li>最终解释权归中国武术博物馆。</li>
+                        </ul>
+                    </div>
+                    <div class="visit-item">
+                        <div class="visit-item-title">• 地图导览 •</div>
+                        <div class="visit-item-content indent">
+                            中国武术博物馆分为两层，大家在参观时，建议先参观第一层，按照拳械厅、历史厅、临展厅的顺序参观，对武术文化历史有一定的了解后，再参观中国武术博物馆的地下层，这里主要是一些互动展项，大家可以深入的体验武术。
+                            <div class="content-img">
+                                <img src="../img/visit-book-map1.png" alt="">
+                            </div>
+                            中国武术博物馆一层——拳械厅、历史厅、临展厅。
+                            <div class="content-img">
+                                <img src="../img/visit-book-map2.png" alt="">
+                            </div>
+                            中国武术博物馆地下室——多媒体互动展厅。
+                        </div>
+                    </div>
+                    <div class="visit-item">
+                        <div class="visit-item-title">• 温馨提示 •</div>
+                        <ul>
+                            <li>为提升观众参观体验，确保参观秩序，参观高峰期本馆将进行限流，届时将根据实际情况分时段入馆或提前停止入馆。</li>
+                            <li>卫生间地面易湿滑，请注意安全。</li>
+                            <li>小件物品可免费寄存,贵重物品请随身携带。</li>
+                            <li>详询服务台。</li>
+                        </ul>
+                    </div>
+                    <div class="visit-item">
+                        <div class="visit-item-title">• 地理交通 •</div>
+                        <a class="content-img"
+                            href="https://api.map.baidu.com/marker?location=121.534415,31.320091&amp;title=中国武术博物馆&amp;content=中国武术博物馆&amp;output=html">
+                            <img src="../img/baidu-map.png">
+                        </a>
+                        <div class="visit-map-info">
+                            <div class="map-item">
+                                中国·上海·长海路399号（内）
+                            </div>
+                            <div class="map-item">
+                                8621-51253386
+                            </div>
+                            <div class="map-item">
+                                wsbwg@sus.edu.cn
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/guide-book.js?v=1.0.0"></script>
+</body>
+
+</html>

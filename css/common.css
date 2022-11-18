@@ -1,0 +1,83 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #381918;
+  font-family: 'Source Han Serif CN';
+}
+
+.van-toast {
+  width: 2rem;
+  height: 2rem;
+}
+
+.van-loading__spinner {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.van-toast__text {
+  font-size: 0.28rem;
+}
+
+/*禁止字体缩放*/
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  /*IOS滑动卡顿*/
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 移动端点击a链接出现蓝色背景问题解决 */
+a:link,
+a:active,
+a:visited,
+a:hover {
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*禁止长按保存*/
+img {
+  user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  width: auto9;
+  /* ie8 */
+  -ms-interpolation-mode: bicubic;
+  /*防止ie图片缩放失真*/
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}

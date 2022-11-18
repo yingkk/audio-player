@@ -1,0 +1,132 @@
+@charset "UTF-8";
+* {
+  font-family: MicrosoftYaHei, "微软雅黑"; }
+
+html, body {
+  width: 100%; }
+
+html, body {
+  height: 100%; }
+
+#fg-app {
+  position: relative;
+  min-height: 100%; }
+
+/* 清除浮动 */
+.cl:after, .clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; }
+
+.cl, .clearfix {
+  zoom: 1; }
+
+.sl {
+  /* 元素溢出内容  隐藏 */
+  overflow: hidden;
+  /* 设置文本不折行 */
+  white-space: nowrap;
+  /* 元素溢出打点 */
+  text-overflow: ellipsis; }
+
+.sl2 {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical; }
+
+.sl3 {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical; }
+
+.sl4 {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical; }
+
+.sl5 {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical; }
+
+a, a:hover, a:visited, a:active {
+  text-decoration: none !important; }
+
+.van-uploader__preview {
+  width: 100%;
+  height: 100%; }
+
+body {
+  color: #333; }
+
+.container {
+  box-sizing: border-box;
+  padding: 0 .20rem; }
+
+.anchorBL {
+  display: none !important; }
+
+#fg-app {
+  display: none; }
+
+.disabled {
+  pointer-events: none !important; }
+
+button.disabled {
+  background: #bbb !important;
+  border-color: #bbb !important; }
+
+.mz-show-title {
+  font-size: .16rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: .3rem; }
+
+@keyframes lb {
+  0% {
+    background-position: 5px 4px; }
+  100% {
+    background-position: -103px 4px; } }
+.lb {
+  display: inline-block;
+  width: .36rem;
+  height: .28rem;
+  background: #B3312A url(../img/lb.png) no-repeat;
+  background-size: .98rem;
+  transform: scale(0.5) translate(50%, -50%); }
+
+@keyframes lb1 {
+  0% {
+    background-position: .05rem .04rem; }
+  100% {
+    background-position: -1.39rem .04rem; } }
+.lb1 {
+  display: inline-block;
+  width: .36rem;
+  height: .28rem;
+  background: url(../img/lb1.png) no-repeat -1.03rem 0.04rem;
+  background-size: 1.34rem;
+  transform: scale(0.5) translate(50%, -50%); }
+
+.lb-pos {
+  position: absolute;
+  right: 0;
+  top: 0; }

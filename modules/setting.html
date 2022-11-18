@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>我的预约</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/setting.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app">
+    <div  class="container">
+        <!-- <div v-if="userInfo" class="name">{{userInfo.name}}</div>
+        <div v-if="userInfo" class="phone">{{userInfo.mobile}}</div> -->
+        <div class="main-c">
+            <!-- <div class="item" style="cursor: pointer;" @click="doClickHref('./setting-edit.html')">基本资料</div> -->
+            <!--            <div class="item">密码修改</div>-->
+            <div class="item">预约记录</div>
+            <ul class="cl">
+                <li @click="doClickHref('./visit-records.html')">
+                    参观预约
+                </li>
+                <li @click="doClickHref('./act-records.html')">
+                    活动预约
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<script src="../js/modules/setting.js?v=1.0.1"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>活动、讲座预约详情</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">-->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <!-- <link rel="stylesheet" href="../css/base.css">  -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/appointment-detail.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="appointment-detail" id="appointment-detail">
+        <div class="head-img">
+            <!-- <img src="../img/test-lecture-listen.png" alt=""> -->
+            <img :src="_fgConfig.baseURI+actDetail.data?.coverUrl" :alt="actDetail.data?.title">
+        </div>
+        <div class="container" v-if="actDetail">
+            <div class="detail-head">
+                <div class="detail-title">
+                    {{ actDetail.data?.title }}
+                </div>
+                <div class="detail-subTitle">
+                    中国武术博物馆 {{ actDetail.data?.actDate}}
+                </div>
+            </div>
+            <div class="detail-body">
+                <div class="detail-body-content" v-html="actDetail.data?.actDescribe"></div>
+                <div class="detail-body-content-end">
+                    <img src="../img/lecture-listen-content-end.png">
+                </div>
+                <!-- <div class="detail-body-attachs">
+                    <div class="attach-title">
+                        <span>讲座音频</span> <img src="../img/audio-tag.png" alt="">
+                    </div>
+                    <div class="attach-list audio-list">
+                        <div class="audio">
+                            <div class="audio-left">
+                                <div class="audio-title"> “走进中华射艺”专题讲座（一）</div>
+                                <div class="audio-time start"> 00:00 </div>
+                                <div class="audio-time end"> 02:35</div>
+                                <audio ref="audio" :src="audioPath" @timeupdate="timeUpdate"
+                                    @canplay="listenCanPlay"></audio>
+                                <input ref="range" type="range" :max="max" min="0" step="1" :value="progressPoint"
+                                    @input="changeProgress"
+                                    :style="{background: '-webkit-linear-gradient(top, #a56403, #3a290f) 0% 0% / '+ progressPoint*100/max +'% 100% no-repeat'}">
+                            </div>
+                            <div class="audio-right" @click="handlePlayAudio">
+                                <img :src="isAudioPlay ? '../img/pause.png': '../img/play.png'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-body-attachs">
+                    <div class="attach-title">
+                        <span>讲座视频</span> <img src="../img/video-tag.png" alt="">
+                    </div>
+                    <div class="attach-list video-list">
+                        <div class="video" @click="handleShowVideoDialog">
+                            <div class="video-cover">
+                                <img src="../img/test-video-cover.png" alt="">
+                                <div class="video-cover-tag">
+                                    <img src="../img/lecture-listen-video-cover.png">
+                                </div>
+                                <div class="cover-mask"></div>
+                            </div>
+                            <div class="video-title">“走进中华射艺” 专题讲座视频（一）</div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="tips">
+                    <div class="tips-title">参观须知
+                        <div class="tips-title-icon"><img src="../img/know.png" alt=""></div>
+                    </div>
+                    <ul>
+                        <li>博物馆16点停止预约进馆，17点准时闭馆。</li>
+                        <li>疫情期间请遵守防控规定，戴好口罩入馆。 </li>
+                        <li>本地入馆需提供72小时核算报告，外地需提供落地检测报告。</li>
+                        <li>预约成功后，入馆先核验健康码、行程码，而后凭预约二维码或预约人身份证入馆。</li>
+                        <li>温馨提示：团队预约可下载 <a style="color: #b99847;font-weight: 700;">团队成员信息模板</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btns" v-if="actDetail.enabled !== 3">
+                <div class="btns-item" @click="handlePersonActAppoint">个人预约</div>
+                <div class="btns-item" @click="handleGroupActAppoint">团队预约</div>
+            </div>
+        </div>
+
+        <van-overlay :show="showVideoDialog" @click="handleHideVideoDialog()">
+            <div class="wrapper">
+                <div class="wrapper-inner">
+                    <video src=""></video>
+                </div>
+            </div>
+        </van-overlay>
+    </div>
+    <script src="../js/modules/appointment-detail.js?v=1.0.0"></script>
+</body>
+
+</html>

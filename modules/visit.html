@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>参观预约</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico"> -->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/visit.css">
+
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <!--  -->
+
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="visit" id="visit">
+        <header class="header">
+            <img src="../img/logo.png" alt="">
+        </header>
+        <div class="container">
+            <div class="container-head">
+                <div class="head-title">参观预约
+                </div>
+            </div>
+            <div class="container-body">
+                <div class="list-item">
+                    <img src="../img/visit-person.png" alt="个人预约">
+                    <a class="list-item-title" href="./visit-person.html">个人预约</a>
+                </div>
+                <div class="list-item">
+                    <img src="../img/visit-group.png" alt="团队预约">
+                    <a class="list-item-title" href="./visit-group.html">团队预约</a>
+                </div>
+                <div class="download-tpl">团体成员信息模板</div>
+                <div class="tips">
+                    <div class="tips-title">参观须知
+                        <div class="tips-title-icon"><img src="../img/know.png" alt=""></div>
+                    </div>
+                    <ul>
+                        <li>博物馆16点停止预约进馆，17点准时闭馆。</li>
+                        <li>疫情期间请遵守防控规定，戴好口罩入馆。 </li>
+                        <li>本地入馆需提供72小时核算报告，外地需提供落地检测报告。</li>
+                        <li>预约成功后，入馆先核验健康码、行程码，而后凭预约二维码或预约人身份证入馆。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/visit.js?v=1.0.1"></script>
+</body>
+
+</html>

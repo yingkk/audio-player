@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>语音导览</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico"> -->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/guide-audio.css">
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="guide-audio" id="guide-audio">
+        <header class="header">
+            <img src="../img/logo.png" alt="">
+        </header>
+        <div class="container">
+            <div class="container-head">
+                <div class="head-title">语音导览</div>
+                <div class="head-tips">友情提示：如在馆内请自带耳机，以保持展厅安静。</div>
+            </div>
+            <div class="container-body">
+                <div class="list-item" v-for="(item, i) in audioList" @click="handleGuideAudioDetail(item.id)">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <div class="mask"></div>
+                            <!-- <img src="../img/test1.png" alt=""> -->
+                            <img :src="_fgConfig.baseURI+item.coverUrl" :alt="item.title">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">{{ item.title }}</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="list-item">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img src="../img/test1.png" alt="">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">馆藏精品之木漆金武术人物工艺品馆藏精品之木漆金武术人物工艺品馆藏精品之木漆金武术人物工艺品</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img src="../img/test1.png" alt="">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">馆藏精品之将军石雕像</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img src="../img/test1.png" alt="">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">馆藏精品之将军石雕像</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img src="../img/test1.png" alt="">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">馆藏精品之将军石雕像</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img src="../img/test1.png" alt="">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">馆藏精品之将军石雕像</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-inner">
+                        <div class="list-item-thumb">
+                            <img src="../img/test1.png" alt="">
+                        </div>
+                        <div class="list-item-right">
+                            <div class="title">馆藏精品之将军石雕像</div>
+                            <div class="view">
+                                <img src="../img/right.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/guide-audio.js?v=1.0.0"></script>
+</body>
+
+</html>

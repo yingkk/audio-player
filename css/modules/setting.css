@@ -1,0 +1,62 @@
+body {
+    background: #F4F4F4;
+}
+
+.name {
+    padding-top: .23rem;
+    height: .26rem;
+    font-size: .2rem;
+    font-weight: bold;
+    line-height: .26rem;
+}
+
+.phone {
+    height: .19rem;
+    line-height: .19rem;
+    padding: .06rem 0 .23rem;
+}
+
+.main-c {
+    height: 2.08rem;
+    background: #FFF;
+}
+.item {
+
+    height: .5rem;
+    line-height: .5rem;
+    box-sizing: border-box;
+    padding-left: .39rem;
+    border-bottom: .01rem solid #F4F4F4;
+}
+.item:nth-child(1) {
+    background: url("../../img/sj_pw_p1.png") no-repeat .11rem .15rem;
+    background-size: .15rem .19rem;
+}
+.item:nth-child(2) {
+    background: url("../../img/sj_pw_p3.png") no-repeat .10rem .16rem;
+    background-size: .19rem .17rem;
+    border-bottom: 0;
+}
+
+ul.cl {
+    box-sizing: border-box;
+    padding: .11rem .16rem 0;
+}
+
+ul li {
+    float: left;
+    height: .8rem;
+    width: .6rem;
+    margin-right: .42rem;
+    background: url("../../img/gr_cg.png") no-repeat center 0;
+    background-size: .54rem .54rem;
+    box-sizing: border-box;
+    padding-top: .6rem;
+    line-height: .19rem;
+    cursor: pointer;
+}
+
+ul li:nth-child(2) {
+    background: url("../../img/gr_hd.png") no-repeat center 0;
+    background-size: .54rem .54rem;
+}

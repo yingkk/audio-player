@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预约平台</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/visit-records.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app">
+    <van-tabs v-model="tabIndex">
+        <van-tab title="个人预约"></van-tab>
+        <van-tab title="团体预约"></van-tab>
+    </van-tabs>
+    <div class="tabs-c">
+        <van-pull-refresh v-if="tabIndex == 0" v-model="refreshing" @refresh="onRefresh">
+            <van-empty v-if="empty" description="暂无个人预约信息"></van-empty>
+            <van-list v-if="!empty" v-model="loading" :finished="finished" finished-text="没有更多了"
+                      @load="reqTabIndex0">
+                <ul class="container">
+                    <li :class="{disabled: item.state > 2}" class="item person" v-for="(item, i) in items">
+                        <div class="item-header">
+                            <span style="margin-right: .24rem">预约号：{{item.no}}</span>
+                            <span style="float: right">{{yyStateMap[item.state]}}</span>
+                        </div>
+                        <div class="item-c cl">
+                            <div class="row row-1 cl">
+                                <div v-if="item.qrcode &&  item.qrcode != ''" class="col">
+                                    <div @click="clickQRCode(item)" class="value sl4"
+                                         style="position: relative; margin-top: 0">
+                                        <img :src="item.qrcode">
+                                    </div>
+                                </div>
+                                <div class="col col-2" :class="{'no-top': !(item.qrcode &&  item.qrcode != '')}"
+                                     style="width: 1.2rem">
+                                    <div class="label">姓名</div>
+                                    <div class="value sl4">{{item.name}}</div>
+                                </div>
+                                <div class="col col-3" :class="{'no-top': !(item.qrcode &&  item.qrcode != '')}">
+                                    <div class="label">人数</div>
+                                    <div class="value sl4">{{item.visitNum}}</div>
+                                </div>
+                                <div class="col" style="width: 100%">
+                                    <div class="label">入馆日期({{item.musInterval.stopIntTimeShow}}截止入馆)</div>
+                                    <div class="value sl4">{{item.visitDate}} {{item.musIntervalShow}}</div>
+                                </div>
+                                <div v-if="!item.show" class="col more">
+                                    <span @click="changeShow(items, i)">查看更多</span>
+                                </div>
+                                <div v-if="item.show" class="col" style="width: 100%">
+                                    <div class="label">预约日期</div>
+                                    <div class="value sl4">{{item.orderTime}}</div>
+                                </div>
+                            </div>
+                            <div class="row row-end">
+                                <div @click="cancelVisitAppo(item)" class="btn" :class="{disabled: item.state > 2}">
+                                    取消预约
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </van-list>
+        </van-pull-refresh>
+
+        <van-pull-refresh v-if="tabIndex == 1" v-model="refreshing1" @refresh="onRefresh1">
+            <van-empty v-if="empty1" description="暂无团体预约信息"></van-empty>
+            <van-list v-if="!empty1" v-model="loading1" :finished="finished1" finished-text="没有更多了"
+                      @load="reqTabIndex1">
+                <ul class="container">
+                    <li :class="{disabled: item.state > 2}" class="item group" v-for="(item, i) in items1">
+                        <div class="item-header">
+                            <span style="margin-right: .24rem">预约号：{{item.no}}</span>
+                            <span style="float: right">{{yyStateMap[item.state]}}</span>
+                        </div>
+                        <div class="item-c cl">
+                            <div class="row row-1 cl">
+                                <div class="col" v-if="item.qrcode &&  item.qrcode != ''">
+                                    <div @click="clickQRCode(item)" class="value sl4"
+                                         style="position: relative; margin-top: 0">
+                                        <img :src="item.qrcode">
+                                    </div>
+                                </div>
+                                <div class="col col-2" style=" width: 1.2rem" :class="{'no-top': !(item.qrcode &&  item.qrcode != '')}">
+                                    <div class="label">姓名</div>
+                                    <div class="value sl4">{{item.name}}</div>
+                                </div>
+                                <div class="col col-3" :class="{'no-top': !(item.qrcode &&  item.qrcode != '')}">
+                                    <div class="label">人数</div>
+                                    <div class="value sl4">{{item.visitNum}}</div>
+                                </div>
+                                <div class="col" style="width: 100%">
+                                    <div class="label">入馆日期({{item.musInterval.stopIntTimeShow}}截止入馆)</div>
+                                    <div class="value sl4">{{item.visitDate}} {{item.musIntervalShow}}</div>
+                                </div>
+                                <div v-if="!item.show" class="col more">
+                                    <span @click="changeShow1(items1, i)">查看更多</span>
+                                </div>
+                                <div v-if="item.show && item.groupType" class="col" style="width: 100%">
+                                    <div class="label">团体类型</div>
+                                    <div class="value sl4">{{item.groupType.name}}</div>
+                                </div>
+                                <div v-if="item.show" class="col" style="width: 100%">
+                                    <div class="label">单位名称</div>
+                                    <div class="value sl4">{{item.groupName}}</div>
+                                </div>
+                                <div v-if="item.show" class="col" style="width: 100%">
+                                    <div class="label">讲解服务</div>
+                                    <div class="value">{{item.isGuide == 0 ? '无预约' : yyJJMap[item.guideLength]}}</div>
+                                </div>
+                                <div v-if="item.show" class="col" style="width: 100%">
+                                    <div class="label">预约日期</div>
+                                    <div class="value sl4">{{item.orderTime}}</div>
+                                </div>
+                            </div>
+                            <div class="row row-end">
+                                <div @click="cancelVisitAppo(item)" class="btn" :class="{disabled: item.state > 2}">
+                                    取消预约
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </van-list>
+        </van-pull-refresh>
+        <van-image-preview v-model="imageShow" :show-index="false" :images="images">
+        </van-image-preview>
+    </div>
+</div>
+<script src="../js/modules/visit-records.js?v=1.0.0"></script>
+</body>
+</html>

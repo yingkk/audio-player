@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>藏品欣赏</title>
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico"> -->
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <!-- <link rel="stylesheet" href="../css/base.css"> -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modules/collection.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible2.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+
+<body>
+    <div ref="collect" id="collect">
+        <header class="header">
+            <img src="../img/logo.png" alt="">
+        </header>
+        <div class="container">
+            <div class="container-head">
+                <div class="head-title">藏品欣赏</div>
+            </div>
+            <div class="container-body">
+                <div class="list-item" v-for="(item, i) in collectionList" @click="handleGuideCollectDetail(item.id)">
+                    <div class="list-item-cover">
+                        <img :src="_fgConfig.baseURI+item.coverUrl" :alt="item.title">
+                    </div>
+                    <div class="list-item-info">
+                        <div class="list-item-title">
+                            {{item.title}}
+                        </div>
+                        <div class="list-item-view">
+                            <img src="../img/right.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/collection.js?v=1.0.0"></script>
+</body>
+
+</html>

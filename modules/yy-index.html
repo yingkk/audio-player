@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预约平台</title>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/vant/vant-rem.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/modules/yy-index.css">
+    <script src="../js/init.js"></script>
+    <script src="../lib/js.cookie/js.cookie.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../lib/axios/axios.min.js"></script>
+    <script src="../js/snlDateTool.js"></script>
+    <script src="../js/req-utils.js"></script>
+    <script src="../js/req.js"></script>
+    <script src="../lib/flexible/flexible.js"></script>
+    <script src="../lib/vue/vue.js"></script>
+    <script src="../lib/vant/vant.min.js"></script>
+</head>
+<body>
+<div ref="app" id="fg-app" class="cl">
+    <div class="row row-1">
+        <div class="item notice" v-if="notices">
+            <van-notice-bar left-icon="volume-o" :text="notices" />
+        </div>
+        <div class="item visit-item">
+            <div class="item-header container">参观预约</div>
+            <div class="item-c container">
+                <ul class="cl">
+                    <li @click="doClickHref('./visit-person.html')"></li>
+                    <li @click="doClickHref('./visit-group.html')"></li>
+                    <li></li>
+                    <li>
+                        团体预约：<br/>
+                        如需批量excel导入团体参观人员信息，请登陆PC官网预约界面操作，谢谢！
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item hd-item">
+            <div class="item-header container">活动预约</div>
+            <div class="item-c container">
+                <ul class="cl">
+                    <li @click="doClickHref('./act-person.html')"></li>
+                    <li @click="doClickHref('./act-group.html')"></li>
+                    <li @click="doClickHref('./act-all.html')"></li>
+                    <li>
+                        团体预约：<br/>
+                        如需批量excel导入团体参观人员信息，请登陆PC官网预约界面操作，谢谢！
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item grzx-item">
+            <div v-if="!userInfo" class="item-header container">您还未登录</div>
+            <div v-if="!!userInfo" class="item-header container">用户：{{userInfo.name}}</div>
+            <div class="item-c container">
+                <van-button @click="clickSettingBtn" :class="{disabled: !userInfo}" color="#B3312A" block>个人中心
+                </van-button>
+            </div>
+        </div>
+<!--        <div class="container">-->
+<!--            <div class="tips">-->
+<!--                <div class="tips-header">注意</div>-->
+<!--                <div class="tips-c">-->
+<!--                    文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明文字说明-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <van-popup :close-on-click-overlay="false" class="bind" v-model="bindPhoneShow">
+            <div class="bind-phone">
+                <div class="bind-phone-header">绑定您的手机号</div>
+                <van-form @submit="onSubmit" @failed="onFailed">
+                    <van-field
+                            v-model="bindForm.phone"
+                            name="phone"
+                            label="手机号"
+                            placeholder="请输入手机号"
+                            :rules="[{ validator, message: '请输入正确手机号' }]"></van-field>
+                    <van-field
+                            v-model="bindForm.msgCode"
+                            name="msgCode"
+                            label="短信验证码"
+                            placeholder="请输入短信验证码"
+                            :rules="[{ validator: validatorMsgCode1, message: '请获取验证码' },{ validator: validatorMsgCode, message: '请输入正确验证码' }]">
+                        <template #button>
+                            <van-button @click.stop="sendMsg" native-type="button" v-if="!msgCodeDisabled"
+                                        class="msg-code disabled"
+                                        color="#B3312A">
+                                发送验证码
+                            </van-button>
+                            <van-button native-type="button" v-if="msgCodeDisabled && !!msgCodeCount"
+                                        class="msg-code disabled" color="#B3312A">
+                                重新发送(
+                                <count-down v-model="msgCodeCount"></count-down>
+                                )
+                            </van-button>
+                            <van-button native-type="button" @click.stop="sendMsg"
+                                        v-if="msgCodeDisabled && !msgCodeCount"
+                                        class="msg-code" color="#B3312A">
+                                发送验证码
+                            </van-button>
+                        </template>
+                    </van-field>
+                    <div style="margin-top: .1rem">
+                        <van-button block color="#B3312A" native-type="submit">
+                            提交
+                        </van-button>
+                    </div>
+                </van-form>
+            </div>
+        </van-popup>
+        <van-popup closeable close-icon="close" class="setup" v-model="setupPwdShow">
+            <div class="setup-pwd">
+                <div class="setup-pwd-header">请输入密码</div>
+                <div class="setup-pwd-tip">这是您第一次登录，为了以后您能方便进入预约网站，请输入密码</div>
+                <van-form @submit="onSubmit1" @failed="onFailed">
+                    <van-field
+                            v-model="setupPwdForm.password"
+                            name="password"
+                            label="设置秘密"
+                            placeholder="请设置密码"
+                            :rules="[{ validator: validatorPwd, message: '请输入6-32位数字字母密码' }]"></van-field>
+                    <div style="margin-top: .1rem">
+                        <van-button block color="#B3312A" native-type="submit">
+                            确定
+                        </van-button>
+                    </div>
+                </van-form>
+            </div>
+        </van-popup>
+    </div>
+    <div class="row row-2 cl">
+        <div class="col col-1" @click="xzShow=true"><span>预约须知</span></div>
+        <div class="col col-2" @click="wtShow=true"><span>预约Q&A</span></div>
+    </div>
+
+    <van-popup closeable close-icon="close" class="bottom-popup" v-model="xzShow">
+        <div class="bottom-popup-header">预约须知</div>
+        <div class="bottom-popup-c">
+            1. 开放时间为周二至周六。具体开放场次时间详见预约界面。<br/>
+            2. 所有观众（个人、团体）实行实名制预约，<span>其中团体参观及党建活动至少在来馆前一周周五上午11:00前完成预约。<br/>
+            3. 预约成功后，每位观众入馆前均需通过入口处检测点，出示实时绿色“随申码”及“通信大数据行程卡”，通过预约成功二维码或有效身份证件原件或现场预约机出票进行核验，完成体温检测并配合工作人员完成入馆询问后方可入馆。<br/>
+            4. 预约成功后，若有同行人/除团体带队人外的其他成员需提前查看并保存其预约码，请至官网的预约方式页面获取。<br/></span>
+            5. 70岁以上老人、残障人士以及现役军人、警察、教师、医务工作者、烈士及家属等，完成预约后，凭相关证件，由工作人员引导优先入馆。<br/>
+            <span>6. 请您务必按预约时段到馆参观，如不能按期参观，建议在预约时段开始前系统内进行退票。<br/>
+            7. 观众须全程佩戴口罩，进馆需配合通过红外热成像仪检测体温（红外热成像仪发出警报的，由工作人员询问情况并用手持测温仪加测体温）和手部消毒，发现体温高于37.3度、或咳嗽、气促等异常现象的，谢绝入馆参观，并劝其至医疗机构发热门诊就诊。<br/></span>
+            8. 服务热线：021-63246332（每周二至周六9:30--16:00）。
+        </div>
+    </van-popup>
+    <van-popup closeable close-icon="close" class="bottom-popup" v-model="wtShow">
+        <div class="bottom-popup-header">预约Q&A</div>
+        <div class="bottom-popup-c">
+            Q1: 参观/活动何时能线上预约？预约有截止时间吗？<br />
+            A1: 个人参观所选预约时段结束前半小时为截止预约及进馆时间；团体参观及党建活动，至少在来馆前一周周五上午11:00前完成预约。<br />
+            其他活动详见活动页面。<br />
+            <br />
+            Q2: 目前有哪些渠道可以进行线上预约？<br />
+            A2: （1）通过中国证券博物馆官,（http://csm.sse.com.cn/），点击首页【参观指南】下【预约方式】，进入界面后点击【预约入口】，跳转至预约界面进行预约。<br />
+                （2）关注中国证券博物馆官方公众号，进入公众号后点击右下角【享服务】菜单，选择【参观预约】条目，跳转至预约界面进行预约。<br />
+                （3）通过微信小程序预约，微信搜索栏搜索【中国证券博物馆预约平台】进入预约界面进行预约。<br />
+            <br />
+            Q3: 预约时需要提供哪些信息？是否可以替别人预约？<br />
+            A3: 个人及团队预约均需提供所有参观者的有效身份证件及电话号码，团体参观另需提供营业执照编码并上传带队人工作证件图片。特别提醒：博物馆从未要求上传身份证原件图片或人脸采集，若您发现上述要求，请立即退出并致电博物馆021-63246332。
+            个人进行线上预约时，13岁以下不可自行预约，13岁以上可以自行预约，18岁以上的成年人可代约4个名额；团体由带队人统一预约，可用模板一键导入所有成员信息，模板获取方式：pc机登录官网预约界面，于团体参观页面获取。团体参观采取审核制，您填写完预约信息后，馆方一般将于2个工作日内以短信的形式回复您是否预约成功。<br />
+            <br />
+            Q4: 未进行线上预约如何进馆参观？<br />
+            A4: 个人预约：未进行线上预约者，若馆外大屏幕显示的在馆实时人数未超过限制人数，可在预约时段的截止进馆时间前，现场通过官网、微信端（公众号、小程序）或馆外预约机进行预约参观。<br />
+                团体预约：必须提前线上预约，截止时间详见Q1。<br />
+            <br />
+            Q5: 个人参观的携带人/除团队带队人外其他成员的预约码，如何查看？<br />
+            A5: 来馆前，可至官网的预约方式页面扫描二维码以提前查看和保存；或来馆后，于参观当日在博物馆入口处，扫描“我的预约码”即可现场获取。<br />
+            <br />
+            Q6: 想预约团体参观或党建活动，但是团队人数超过35人怎么办？<br />
+            A6: 预约系统中团体参观及党建活动人数上限为35人，团体人数超过35人的，若馆外大屏幕显示的在馆实时人数未超过限制人数，少量超出人数可参考个人参观预约进馆。<br />
+            <br />
+            Q7: 预约了团体参观或党建活动，带队人临时有事没来怎么办？<br />
+            A7: 团体参观及党建活动带队人缺席者，团队人员可通过二维码或刷个人有效身份证件进馆参观。<br />
+            <br />
+            Q8: 预约成功后可以退票吗？怎么退票？<br />
+            A8: 若预约成功后，因个人原因无法在规定时间到馆，请尽早于系统内进行退票。个人预约请在预约时段截止进馆前退票，团体预约请在预约时段开始前退票。超过规定退票时间将无法退票记做爽约，爽约2次将被系统拉入黑名单，3个月内无法预约。
+            登录官网或微信端预约平台，进入【个人中心】查看预约记录中的订单，点击【退票】即可完成退票。<br />
+            <br />
+            Q9: 如何获取“随申码”？<br />
+            A9: 打开微信、支付宝或者“随申办”APP“扫一扫”功能，扫描相应渠道的二维码，即可生成属于自己的“随申码”。目前，外国人、台湾同胞只能从支付宝申领“随申码”，港澳同胞可以从支付宝或“随申办”APP申领，港澳小朋友建议通过“随申办”APP申领。关于“随申码”的任何问题请拨打市民热线“12345”。<br />
+            <br />
+            Q10: 如何获取“通信大数据行程卡”？<br />
+            A10: 打开微信“扫一扫”功能，扫描相应渠道的二维码；或下载“通信行程卡”APP，即可生成属于自己的“行程卡”。<br />
+            <br />
+            Q11: 请问我预约了，必须要取票吗？<br />
+            A11: 无需。 参观当日，出示本人预约登记时使用的有效证件原件或本人预约二维码，同时须提供本人实时“随申码”及“行程卡”，显示绿色即可入馆。<br />
+            <br />
+            Q12: 如果我错过了预约时间段怎么办？<br />
+            A12: 请您务必按预约时间段到馆参观，如超过当场截止进馆时间将谢绝入馆。<br />
+            <br />
+            Q13: 我是外地游客，我到了上海才知道参观博物馆要预约，现场没有名额了怎么办？<br />
+            A13: 我们的预约须知已在中国证券博物馆各官方平台公告。建议您预约其他日期或改选其他景区、文博单位参观，也可随时关注预约情况，如有观众退约，您可进行预约。<br />
+            <br />
+            Q14: 中国证券博物馆有停车场吗？<br />
+            A14: 我馆现在无观众停车场。15号正门可进行短暂落客。<br />
+            <br />
+            Q15: 博物馆内有寄行李的地方吗？<br />
+            A15: 如需寄存，请联系15号门现场工作人员。<br />
+            <br />
+            Q16: 各种个人信息授权，是否安全？<br />
+            A16: 我们郑重承诺将对您的个人信息严格保密。
+        </div>
+    </van-popup>
+</div>
+<script src="../js/modules/yy-index.js?v=1.0.4"></script>
+</body>
+</html>

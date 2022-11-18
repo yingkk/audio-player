@@ -1,0 +1,94 @@
+body {
+    background: #F4F4F4;
+}
+
+.header {
+    padding: .14rem 0 .1rem;
+    font-size: .12rem;
+    line-height: .16rem;
+}
+
+ul li {
+    position: relative;
+    box-sizing: border-box;
+    width: 3.35rem;
+    height: 2.45rem;
+    background: #FFFFFF;
+    padding: .2rem .16rem;
+    margin-bottom: .12rem;
+}
+
+.row-1 .col{
+    float: left;
+    height: 1.47rem;
+}
+
+.row-1 .col-1{
+    width: 1.2rem;
+    margin-right: .1rem;
+}
+
+.row-1 .col-1 img{
+    width: 100%;
+    height: 100%;
+}
+
+.row-1 .col-2 {
+    width: 1.7rem;
+}
+
+.row-2, .row-3 {
+    margin-top: .14rem;
+    width: 3.03rem;
+    height: 0.44rem;
+    line-height: 0.44rem;
+    text-align: center;
+}
+
+.row-2 {
+    cursor: pointer;
+    background: #F4E3E2;
+    border: 0.01rem solid #B3312A;
+    color: #B3312A;
+    font-weight: bold;
+}
+
+.row-3 {
+    color: #999999;
+    background: #EDEDED;
+}
+.item-title {
+    height: 0.21rem;
+    font-size: 0.16rem;
+    font-weight: bold;
+    line-height: 0.21rem;
+}
+
+.item-desc {
+    margin-top: .14rem;
+    font-size: .12rem;
+}
+
+.item-flag {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+.item-flag>div {
+    float: left;
+    height: .24rem;
+    padding: 0 .12rem;
+    font-size: .1rem;
+    line-height: 0.24rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #B3312A;
+}
+.item-flag>div:nth-child(2) {
+    background: #C4A06C;
+}
+
+
+
+

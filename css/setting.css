@@ -1,0 +1,38 @@
+@charset "UTF-8";
+/*禁止字体缩放*/
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  /*IOS滑动卡顿*/
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 移动端点击a链接出现蓝色背景问题解决 */
+a:link,
+a:active,
+a:visited,
+a:hover {
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*禁止长按保存*/
+img {
+  user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  width: auto9;
+  /* ie8 */
+  -ms-interpolation-mode: bicubic;
+  /*防止ie图片缩放失真*/
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}

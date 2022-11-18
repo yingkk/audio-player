@@ -1,0 +1,129 @@
+html, body {
+    background: #F4F4F4 !important;
+}
+
+#fg-app {
+    height: 100vh;
+}
+
+.van-tabs__wrap {
+    height: .44rem;
+}
+
+#fg-app .tabs-c {
+    height: calc(100vh - .44rem);
+    overflow: auto;
+}
+
+ul.container {
+    padding-top: .12rem;
+}
+
+ul li {
+    width: 3.35rem;
+    background: #FFFFFF;
+    border-radius: 0.06rem;
+    border: 0.01rem solid #D3D3D3;
+    margin-bottom: .12rem;
+}
+ul li:last-child {
+    margin-bottom: 0;
+}
+
+li.disabled {
+    pointer-events: auto !important;
+}
+
+li.disabled .item-header {
+    background: #BFBFBF;
+}
+
+.item-header {
+    width: 3.35rem;
+    height: 0.44rem;
+    background: #CFA972;
+    border-radius: 0.06rem 0.06rem 0 0;
+    line-height: .44rem;
+    padding: 0 12px;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.col {
+    float: left;
+    margin-right: .12rem;
+    font-size: .12rem;
+}
+.col-2, .col-3 {
+    margin-top: .25rem;
+}
+
+.col.no-top {
+    margin-top: 0;
+}
+
+.col .label {
+    padding-top: .05rem;
+}
+
+.col .value {
+    margin-top: .06rem;
+    font-size: .14rem;
+    font-weight: bold;
+    line-height: .19rem;
+}
+
+.col .value img {
+    width: .79rem;
+    height: .79rem;
+}
+
+.row-1 {
+    padding: .16rem .12rem;
+    box-sizing: border-box;
+}
+
+.row-end {
+    border-top: .01rem solid #D3D3D3;
+    box-sizing: border-box;
+    padding: .12rem;
+}
+
+.row-end .btn {
+    height: .36rem;
+    line-height: .36rem;
+    background: #F4E3E2;
+    border: .01rem solid #B3312A;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: #B3312A;
+}
+
+.row-end .btn.disabled {
+    color: #CCC;
+    background: #F9F9F9;
+    border: .01rem solid #CCC;
+    font-weight: normal;
+}
+
+.col.more {
+    margin: .1rem 0 0;
+    width: 100%;
+    text-align: center;
+}
+
+.col.more span {
+    cursor: pointer;
+    padding:.05rem .24rem .05rem .12rem;
+    background: url("../../img/more.png") no-repeat right center;
+    color: #999999;
+    line-height: 20px;
+}
+
+
+
+
+
+

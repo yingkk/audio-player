@@ -1,0 +1,157 @@
+.header {
+  width: 100%;
+  height: 2.3467rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../img/header-bg.png);
+  background-size: 100% 0.9067rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.header img {
+  width: 1.7333rem;
+  height: 1.6667rem;
+}
+
+#guide-audio {
+  width: 100%;
+  height: calc(100% - 2.3467rem);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #fff8f0;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+  padding: 0.4267rem 0.64rem;
+  box-sizing: border-box;
+}
+
+.container .container-head {
+  flex: none;
+  width: 100%;
+  padding-bottom: 0.2133rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .container-head .head-title {
+  font-size: 0.48rem;
+  font-weight: bold;
+  color: #381918;
+}
+
+.container .container-head .head-tips {
+  font-size: 0.32rem;
+  font-weight: 300;
+  color: rgba(56, 25, 24, 0.7);
+  margin-top: 0.2933rem;
+}
+
+.container .container-body {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0.8rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.container .container-body .list-item {
+  width: 100%;
+  height: 1.98rem;
+  padding: 0 0.0533rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.container .container-body .list-item .list-item-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 0.28rem;
+  box-shadow: 0 0.0533rem 0.1333rem 0 rgba(166, 152, 135, 0.5);
+  box-sizing: border-box;
+  padding: 0.1333rem;
+}
+
+.container .container-body .list-item .list-item-inner .list-item-thumb {
+  flex: none;
+  width: 2.0533rem;
+  height: 1.74rem;
+  border-radius: 0.1333rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.container .container-body .list-item .list-item-inner .list-item-thumb img {
+  height: 100%;
+}
+
+.container .container-body .list-item .list-item-inner .list-item-thumb .mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(56, 25, 24, 0.4);
+}
+
+.container .container-body .list-item .list-item-inner .list-item-thumb::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.9867rem;
+  height: 0.8267rem;
+  margin-left: -0.4933rem;
+  margin-top: -0.4133rem;
+  background-image: url("../../img/ear-phone.png");
+  background-size: 0.9867rem 0.8267rem;
+  background-repeat: no-repeat;
+}
+
+.container .container-body .list-item .list-item-inner .list-item-right {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .container-body .list-item .list-item-inner .list-item-right .title {
+  display: flex;
+  align-items: center;
+  width: 6rem;
+  padding: 0 0.3rem;
+  box-sizing: border-box;
+  font-size: 0.32rem;
+  font-weight: bold;
+  color: #381918;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.container .container-body .list-item .list-item-inner .list-item-right .view {
+  width: 0.24rem;
+  height: 0.4533rem;
+}
+
+.container .container-body .list-item:not(:first-child) {
+  margin-top: 0.1867rem;
+}
+
+.container ::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}
