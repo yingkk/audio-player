@@ -33,7 +33,8 @@ var app = new Vue({
       audio.currentTime = this.currentTime;
     },
     timeUpdate: function (e) {
-      e.preventDefault();
+      const flag = isIPhoneAgent();
+      flag ? e.preventDefault() : null;
       this.currentTime = e.target.currentTime;
       this.currentTimeFormatStr = timeToMinute(this.currentTime)
       if (!this.currentTime) return false;

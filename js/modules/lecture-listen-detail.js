@@ -40,7 +40,8 @@ var app = new Vue({
       }
     },
     timeUpdate: function (e, index) {
-      e.preventDefault();
+      const flag = isIPhoneAgent();
+      flag ? e.preventDefault() : null;
       this.activeAudioIndex = index;
       this.activeRangeIndex = index;
       this.currentTime = e.target.currentTime;

@@ -491,3 +491,15 @@ function timeToMinute(times) {
   t = t.substring(0, t.length - 3);
   return t;
 }
+
+function isIPhoneAgent() {
+  let userAgent = navigator.userAgent;
+  let flag = false;
+  if (userAgent.includes("iPhone") || userAgent.includes("iPad")) {
+    flag = true;
+  }
+  if (userAgent.includes("Android")) {
+    flag = false;
+  }
+  return flag;
+}
